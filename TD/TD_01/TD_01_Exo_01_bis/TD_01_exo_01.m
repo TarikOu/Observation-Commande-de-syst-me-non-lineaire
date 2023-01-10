@@ -1,5 +1,7 @@
-% TD 1 : Observation et Commande Non Linéaire
-% Trouver une ma trice P qui verifie la condition de Lyapunov pour A1 A2 A3 A4
+%{ 
+TD 1 : Observation et Commande Non Linéaire
+Trouver une matrice 'P' qui verifie la condition de Lyapunov pour A1 A2 A3 A4
+%}
 %%
 clc; clear; close all;
 %% Linear representation of the non linear systeme
@@ -10,6 +12,11 @@ A4 = [0 1; -0.02 0];
 B = [0; 1];
 
 %% LMIedit resolt : 
+%{ 
+on a utiliser lmiedit pour créer les lmi ci dessous
+ 
+%}
+     
 setlmis([]);
 X=lmivar(1,[2 1]);
 Y1=lmivar(2,[1 2]);
@@ -38,18 +45,18 @@ lmiterm([5 1 1 Y4],.5*B,1,'s');                 % LMI #5: B*Y4 (NON SYMMETRIC?)
 Exo01suite=getlmis;
 
 [t,Xp] = feasp(Exo01suite);
-X = dec2mat(Exo01suite,Xp, X)
-
-Y1 = dec2mat(Exo01suite, Xp, Y1)
-Y2 = dec2mat(Exo01suite, Xp, Y2)
-Y3 = dec2mat(Exo01suite, Xp, Y3)
-Y4 = dec2mat(Exo01suite, Xp, Y4)
-
-K1 = Y1*inv(X);
-K2 = Y2*inv(X);
-K3 = Y3*inv(X);
-K4 = Y4*inv(X);
-
+X = dec2mat(Exo01suite,Xp, X);
+%
+Y1 = dec2mat(Exo01suite, Xp, Y1);
+Y2 = dec2mat(Exo01suite, Xp, Y2);
+Y3 = dec2mat(Exo01suite, Xp, Y3);
+Y4 = dec2mat(Exo01suite, Xp, Y4);
+%
+K1 = Y1/X;
+K2 = Y2/X;
+K3 = Y3/X;
+K4 = Y4/X;
+% Verifier que les valeurs pro des LMI sont a PRN avec les gain ki trouvés: 
 eig(A1 + B*K1)
 eig(A2 + B*K2)
 eig(A3 + B*K3)
